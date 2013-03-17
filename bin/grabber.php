@@ -71,11 +71,11 @@ class Grabber
     protected $_client;
 
     protected $_allowedTankTypesAliases = array(
-        'b-encyclopedia-type_lighttank'  => 1,
-        'b-encyclopedia-type_mediumtank' => 2,
-        'b-encyclopedia-type_heavytank'  => 3,
-        'b-encyclopedia-type_at-spg'     => 4,
-        'b-encyclopedia-type_spg'        => 5,
+        'b-encyclopedia-type__lighttank'  => 1,
+        'b-encyclopedia-type__mediumtank' => 2,
+        'b-encyclopedia-type__heavytank'  => 3,
+        'b-encyclopedia-type__at-spg'     => 4,
+        'b-encyclopedia-type__spg'        => 5,
     );
 
     protected $_allowedNations = array();
@@ -127,7 +127,11 @@ class Grabber
         $trees = $html->find('.i-three-coll');
         foreach ($trees as $tree) {
             $typeEl = $tree->children(0);
+            if ( ! $typeEl) {
+                continue;
+            }
             $classes = explode(' ', $typeEl->class);
+            $typeEl->clear();
             $compare = array_intersect($classes, $allowedTankTypes);
             $tankType = null;
             if ( ! empty($compare)) {
@@ -146,9 +150,10 @@ class Grabber
                 $tank['href']      = $href;
                 $tank['lvl']       = romanToArabic($lvl->plaintext);
                 $tanks[] = $tank;
+                $item->clear();
             }
-
         }
+        $html->clear();
         return $tanks;
     }
 
@@ -247,17 +252,21 @@ class Grabber
             foreach ($blocks as $k => $block) {
 
                 if ( ! isset($toParseCopy[$k])) {
+                    $block->clear();
                     continue;
                 }
                 $field = $toParseCopy[$k];
                 $value = $block->plaintext;
                 if ($field == 'price') {
-                    $block = $block->children(0);
-                    if ( ! $block || $block->class != 'currency-credit') {
+                    $subBlock = $block->children(0);
+                    if ( ! $subBlock || $subBlock->class != 'currency-credit') {
                         $value = 'Gift Tank';
                         $isPremium = 1;
                     } else {
-                        $value = $block->plaintext;
+                        $value = $subBlock->plaintext;
+                    }
+                    if (gettype($subBlock) == 'object') {
+                        $subBlock->clear();
                     }
                 }
                 $parameters[$field] = $this->_unformatValue($field, $value);
@@ -271,6 +280,7 @@ class Grabber
                     $parameters['weight']     = $weight;
                     $parameters['load_limit'] = $loadLimit;
                 }
+                $block->clear();
 
             }
 
@@ -313,6 +323,7 @@ class Grabber
             $completedTankParameters[$completedTankParameter['temporary_id']] = $completedTankParameter;
 
             print 'Progress: ' . $count++ . '/' . $total . '.' . "            \r";
+            $html->clear();
         }
         print PHP_EOL;
         return array($completedTanks, $completedTankParameters);
