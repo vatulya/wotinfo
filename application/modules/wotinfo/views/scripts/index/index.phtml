@@ -1,0 +1,46 @@
+<div class="float-panel">
+    <h5>Nations:</h5>
+    <?php foreach ($this->nations as $nation): ?>
+        <?php if ( ! $nation['total_tanks']) continue; ?>
+        <a href="#nation-<?php echo $nation['code']; ?>"><?php echo $nation['full_name']; ?></a></br>
+    <?php endforeach; ?>
+</div>
+
+<div class="span12">
+<?php foreach ($this->nations as $nation): ?>
+    <?php if ( ! $nation['total_tanks']) continue; ?>
+
+<h3><a href="#" name="nation-<?php echo $nation['code']; ?>"><?php echo $nation['full_name']; ?></a></h3>
+<table class="table table-hover">
+    <tr>
+        <th>
+            Lvl
+        </th>
+        <?php foreach ($this->tank_types as $tankType): ?>
+        <th>
+            <?php echo $tankType['full_name']; ?>
+        </th>
+        <?php endforeach; ?>
+    </tr>
+    <?php foreach ($this->levels as $lvl): ?>
+    <tr>
+        <td>
+            <?php echo $lvl['roman']; ?>
+        </td>
+        <?php foreach ($nation['tank_types'] as $tankType): ?>
+        <td>
+            <?php if ( ! empty($tankType['tanks'][$lvl['arabic']])): ?>
+            <?php foreach ($tankType['tanks'][$lvl['arabic']] as $tank): ?>
+                <a href="<?php echo $this->url(array('nation_code' => $nation['code'], 'tank_code' => $tank['code']), 'tank_details', true); ?>">
+                    <?php echo $tank['full_name']; ?>
+                </a><br/>
+            <?php endforeach; ?>
+            <?php endif; ?>
+        </td>
+        <?php endforeach; ?>
+    </tr>
+    <?php endforeach; ?>
+</table>
+
+<?php endforeach; ?>
+</div>

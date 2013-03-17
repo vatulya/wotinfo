@@ -1,0 +1,111 @@
+<?php $this->headScript()->prependFile('/js/compare-index.js'); ?>
+
+<script language="javascript">
+    var compareUrl = '<?php echo $this->url(array('action' => 'compare'), 'compare', true); ?>';
+</script>
+
+<div class="span12">
+    <h3>Сравнить технику</h3>
+</div>
+
+<div class="float-panel">
+    <button class="btn btn-success width-full" id="compare-button">Compare</button>
+    <div class="btn-group" data-toggle="buttons-radio">
+        <button type="button" class="btn btn-primary active">По нациям</button>
+        <button type="button" class="btn btn-primary">По типу</button>
+    </div>
+    <div class="filter-container open">
+        <h5>
+            <span class="explain icon-plus-sign"></span>
+            <span class="explain icon-minus-sign"></span>
+            <input type="checkbox" name="compare-filter-all-nations" class="compare-all-filter compare-all-filter-nation">
+            Нации:
+        </h5>
+        <div class="filter-content">
+            <?php foreach ($this->nations as $nation): ?>
+            <label class="checkbox">
+                <input type="checkbox" name="compare-filter-nation-<?php echo $nation['code']; ?>" class="compare-filter" data-type="nation" data-value="<?php echo $nation['code']; ?>">
+                <a href="#nation-<?php echo $nation['code']; ?>"><?php echo $nation['full_name']; ?></a>
+            </label>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="filter-container">
+        <h5>
+            <span class="explain icon-plus-sign"></span>
+            <span class="explain icon-minus-sign"></span>
+            <input type="checkbox" name="compare-filter-all-tank-types" class="compare-all-filter compare-all-filter-tank-type">
+            Типы:
+        </h5>
+        <div class="filter-content">
+            <?php foreach ($this->tank_types as $tankType): ?>
+            <label class="checkbox">
+                <input type="checkbox" name="compare-filter-tank-type-<?php echo $tankType['code']; ?>" class="compare-filter" data-type="tank-type" data-value="<?php echo $tankType['code']; ?>">
+                <?php echo $tankType['full_name']; ?>
+            </label>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="filter-container">
+        <h5>
+            <span class="explain icon-plus-sign"></span>
+            <span class="explain icon-minus-sign"></span>
+            <input type="checkbox" name="compare-filter-all-lvls" class="compare-all-filter compare-all-filter-lvl">
+            Уровни:
+        </h5>
+        <div class="filter-content">
+            <?php foreach ($this->levels as $lvl): ?>
+            <label class="checkbox">
+                <input type="checkbox" name="compare-filter-lvl-<?php echo $lvl['arabic']; ?>" class="compare-filter" data-type="lvl" data-value="<?php echo $lvl['arabic']; ?>">
+                <?php echo $lvl['roman']; ?>
+            </label>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>
+
+<div class="span12">
+    <?php foreach ($this->nations as $nation): ?>
+    <?php if ( ! $nation['total_tanks']) continue; ?>
+
+    <div class="container-nation container-nation-<?php echo $nation['code']; ?>">
+
+        <h3><a href="#" name="nation-<?php echo $nation['code']; ?>"><?php echo $nation['full_name']; ?></a></h3>
+        <table class="table table-hover">
+            <tr>
+                <th>
+                    Lvl
+                </th>
+                <?php foreach ($this->tank_types as $tankType): ?>
+                <th class="col-tank-type col-tank-type-<?php echo $tankType['code']; ?>">
+                    <?php echo $tankType['full_name']; ?>
+                </th>
+                <?php endforeach; ?>
+            </tr>
+            <?php foreach ($this->levels as $lvl): ?>
+            <tr class="row-lvl row-lvl-<?php echo $lvl['arabic']; ?>">
+                <td>
+                    <?php echo $lvl['roman']; ?>
+                </td>
+                <?php foreach ($nation['tank_types'] as $tankType): ?>
+                <td class="col-tank-type col-tank-type-<?php echo $tankType['code']; ?>">
+                    <?php if ( ! empty($tankType['tanks'][$lvl['arabic']])): ?>
+                    <?php foreach ($tankType['tanks'][$lvl['arabic']] as $tank): ?>
+                        <div>
+                            <label for="<?php echo $nation['code'] . '|' . $tank['code']; ?>" class="checkbox">
+                                <input class="vehicle-to-compare" type="checkbox" name="<?php echo $nation['code'] . '|' . $tank['code']; ?>" id="<?php echo $nation['code'] . '|' . $tank['code']; ?>">
+                                <?php echo $tank['full_name']; ?>
+                            </label>
+                        </div>
+                    <?php endforeach; ?>
+                    <?php endif; ?>
+                </td>
+                <?php endforeach; ?>
+            </tr>
+            <?php endforeach; ?>
+        </table>
+
+    </div>
+
+    <?php endforeach; ?>
+</div>

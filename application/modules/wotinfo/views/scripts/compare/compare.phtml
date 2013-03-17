@@ -1,0 +1,222 @@
+<?php $this->headScript()->prependFile('/js/compare.js'); ?>
+
+<script language="javascript">
+    var compareUrl = '<?php echo $this->url(array('action' => 'compare'), 'compare', true); ?>';
+</script>
+
+<div class="span12 pull-left">
+    <h3>Сравнение техники</h3>
+</div>
+
+<div class="float-panel" style="">
+    <div class="accordion" id="compare-panel-accordion">
+        <div class="accordion-group">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#compare-panel-accordion" href="#filter-parameters">
+                    Фильтр параметров
+                </a>
+            </div>
+            <div id="filter-parameters" class="accordion-body collapse">
+                <div class="accordion-inner">
+                    <div class="container-filter-parameter-all">
+                        <label for="filter-parameter-all" class="checkbox">
+                            <input class="filter-parameter-all" type="checkbox" name="filter-parameter-all" id="filter-parameter-all">
+                            Отметить все
+                        </label>
+                    </div>
+                    <?php foreach ($this->parameters as $key => $name): ?>
+                    <div>
+                        <label for="filter-parameter-<?php echo $key; ?>" class="checkbox">
+                            <input class="filter-parameter" type="checkbox" name="filter-parameter-<?php echo $key; ?>" id="filter-parameter-<?php echo $key; ?>" data-parameter="<?php echo $key; ?>">
+                            <?php echo $name; ?>
+                        </label>
+                    </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-group" style="display: none;">
+            <div class="accordion-heading">
+                <a class="accordion-toggle" data-toggle="collapse" data-parent="#compare-panel-accordion" href="#collapseTwo">
+                    Collapsible Group Item #2
+                </a>
+            </div>
+            <div id="collapseTwo" class="accordion-body collapse">
+                <div class="accordion-inner">
+                    Anim pariatur cliche...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="span12">
+
+    <?php
+        function getSortClass($sort, $sortNeed, $direction) {
+            $sortClass = '';
+            if ($sort == $sortNeed) {
+                $sortClass .= 'sorted-col ';
+                $sortClass .= ($direction == 'desc' ? 'sorted-down' : 'sorted-up');
+            }
+            return $sortClass;
+        }
+    ?>
+
+    <table class="compare-structure">
+        <tr class="row1">
+            <td class="column1">
+                <table class="table">
+                    <tr>
+                        <th class="col-param col-cell col-cell-level sortable-col <?php echo getSortClass($this->sort, 'lvl', $this->direction); ?>">
+                            <?php $direction = $this->sort == 'lvl' && $this->direction == 'asc' ? 'desc' : 'asc'; ?>
+                            <?php $sort = array('sort' => 'lvl', 'd' => $direction); ?>
+                            <a href="<?php echo $this->url(array(), 'compare') . '?' . http_build_query(array('tanks' => $this->compare)) . '&' . http_build_query($sort); ?>">
+                                Ур.
+                            </a>
+                            <span class="sort-icon icon-chevron-down"></span>
+                            <span class="sort-icon icon-chevron-up"></span>
+
+                        </th>
+
+                        <th class="col-param col-cell col-cell-name sortable-col  <?php echo getSortClass($this->sort, 'name', $this->direction); ?>">
+                            <?php $direction = $this->sort == 'name' && $this->direction == 'asc' ? 'desc' : 'asc'; ?>
+                            <?php $sort = array('sort' => 'name', 'd' => $direction); ?>
+                            <a href="<?php echo $this->url(array(), 'compare') . '?' . http_build_query(array('tanks' => $this->compare)) . '&' . http_build_query($sort); ?>">
+                                Название
+                            </a>
+                            <span class="sort-icon icon-chevron-down"></span>
+                            <span class="sort-icon icon-chevron-up"></span>
+
+                        </th>
+                    </tr>
+                </table>
+            </td>
+            <td class="column2">
+
+                <div class="all-parameters">
+                    <div class="params-container">
+                        <table class="table">
+                            <tr>
+                                <?php foreach ($this->parameters as $key => $name): ?>
+                                <th class="col-param col-cell col-cell-<?php echo $key; ?> sortable-col <?php echo getSortClass($this->sort, $key, $this->direction); ?>">
+                                    <?php $direction = $this->sort == $key && $this->direction == 'asc' ? 'desc' : 'asc'; ?>
+                                    <?php $sort = array('sort' => $key, 'd' => $direction); ?>
+                                    <a href="<?php echo $this->url(array(), 'compare') . '?' . http_build_query(array('tanks' => $this->compare)) . '&' . http_build_query($sort); ?>">
+                                        <?php echo $name; ?>
+                                    </a>
+                                    <?php if ($this->sort == $key): ?>
+                                        <span class="sort-icon <?php echo $this->direction == 'desc' ? 'icon-chevron-down' : 'icon-chevron-up'; ?>"></span>
+                                    <?php endif; ?>
+                                </th>
+                                <?php endforeach; ?>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+        <tr class="row2">
+            <td class="column1">
+
+                <div class="all-vehicles">
+                    <div class="params-container">
+                        <table class="table">
+                            <?php foreach ($this->tanks as $tank): ?>
+                            <tr>
+                                <td class="row-cell row-cell-<?php echo $tank['code']; ?> tank-level-cell">
+                                    <?php echo $this->levels[$tank['lvl']]['roman']; ?>
+                                </td>
+                                <td class="cell-tank-name row-cell row-cell-<?php echo $tank['code']; ?> tank-full-name-cell" title="<?php echo $tank['full_name']; ?>">
+                                    <div class="tank-full-name-overflow">
+                                        <a href="<?php echo $this->tankParameters()->url($tank['nation_code'], $tank['code']); ?>" target="_blank">
+                                            <?php echo $tank['full_name']; ?>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                </div>
+
+            </td>
+            <td class="column2">
+
+                <div class="all-vehicle-parameters" data-scroll="<?php echo $this->scroll; ?>">
+                    <div class="params-container">
+                        <table class="table">
+
+                            <?php
+                                $compareTanks  = array();
+                                $compareValues = array();
+                                $compareRules  = array(
+                                    'hit_points' => 1,
+                                    'weight'     => 1,
+                                    'load_limit' => 1,
+                                    'price'      => 0,
+                                    'engine_power' => 1,
+                                    'speed_limit' => 1,
+                                    'traverse_speed' => 1,
+                                    'turret_traverse_speed' => 1,
+                                    'hull_armor'            => 1,
+                                    'turret_armor'          => 1,
+                                    'ammunition'            => 1,
+                                    'avg_damage'            => 1,
+                                    'armor_penetration'     => 1,
+                                    'rate_of_fire'          ,'view_range','signal_range');
+                            ?>
+
+                            <?php foreach ($this->tanks as $tank): ?>
+
+                            <tr>
+                                <?php foreach ($this->parameters as $key => $name): ?>
+
+                                <?php
+                                    if ($key == 'price' && $tank[$key] > 0) {
+                                        if (empty($compareValues[$key]) || $compareValues[$key] > $tank[$key]) {
+                                            $compareValues[$key] = $tank[$key];
+                                            $compareTanks[$key]  = array();
+                                        }
+                                    } else {
+                                        if (empty($compareValues[$key]) || $compareValues[$key] < $tank[$key]) {
+                                            $compareValues[$key] = $tank[$key];
+                                            $compareTanks[$key]  = array();
+                                        }
+                                    }
+                                    if ($compareValues[$key] == $tank[$key]) {
+                                        array_push($compareTanks[$key], $tank['code']);
+                                    }
+                                    if ($key == 'gun_name') {
+                                        unset($compareValues[$key]);
+                                        unset($compareTanks[$key]);
+                                    }
+                                ?>
+
+                                <td class="tank-parameter-cell row-cell-<?php echo $tank['code']; ?> col-cell-<?php echo $key; ?>" data-tank="<?php echo $tank['code']; ?>" data-param="<?php echo $key; ?>">
+                                    <?php echo $this->tankParameters()->format($key, $tank[$key]); ?>
+                                </td>
+                                <?php endforeach; ?>
+                            </tr>
+
+                            <?php endforeach; ?>
+                        </table>
+
+                        <script language="javascript">
+
+                            var compare = '<?php echo json_encode($compareTanks); ?>';
+                            if (compare != "") {
+                                var compare = JSON.parse(compare);
+                            }
+
+                        </script>
+
+                    </div>
+                </div>
+
+            </td>
+        </tr>
+    </table>
+
+</div>

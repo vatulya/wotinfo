@@ -1,0 +1,39 @@
+<?php echo $this->doctype() ?>
+<html>
+<head>
+    <?php $this->headLink()
+        ->appendStylesheet('/css/bootstrap.css')
+        ->appendStylesheet('/css/styles.css')
+    ?>
+    <?php echo $this->headLink() ?>
+    <?php echo $this->headTitle() ?>
+
+    <?php
+    $this->headScript()
+        ->prependFile('/js/global.js')
+        ->prependFile('/js/bootstrap.js')
+        ->prependFile('/js/jquery.cookie.js')
+        ->prependFile('/js/jquery.form.js')
+        ->prependFile('/js/jquery-1.8.2.min.js')
+?>
+</head>
+<body>
+
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <a class="brand" href="/">WoT-info</a>
+            <ul class="nav">
+                <li><a href="<?php echo $this->url(array(), 'compare', true); ?>">Сравнение техники</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container" id="container">
+    <?php echo $this->layout()->content ?>
+</div>
+
+<?php echo $this->headScript(); ?>
+</body>
+</html>

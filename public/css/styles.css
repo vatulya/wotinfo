@@ -1,0 +1,206 @@
+/*** Re-write Twitter Bootstrap styles ***/
+.navbar-static-top .container, .navbar-fixed-top .container, .navbar-fixed-bottom .container, .container {
+    width: 1260px;
+}
+.width-full {
+    width: 100%;
+}
+input[type="checkbox"] {
+    margin-bottom: 0px;
+}
+.popover-inner {
+    width: auto;
+}
+/*** Personal styles ***/
+#container {
+    margin-top: 60px;
+}
+.small-tip {
+    font-size: 10px;
+    color: gray;
+}
+form.form-mini {
+    padding: 0px; margin: 0px;
+}
+.btn-no-text {
+    padding: 6px 14px 7px 14px;
+}
+.table-small-td td {
+    padding-top: 3px;
+    padding-bottom: 3px;
+    vertical-align: middle;
+}
+
+/*** Float panel ***/
+.float-panel {
+    position: fixed;
+    top: 60px;
+    right: 10px;
+    border: 1px solid #000000;
+    padding: 5px;
+    width: 250px;
+    background-color: #FaFaFa;
+}
+
+/*** Right panel ***/
+.right-panel {
+    float: right;
+    border: 1px solid #000000;
+    padding: 5px;
+    width: 250px;
+    background-color: #FaFaFa;
+}
+
+/*** Compare Index page ***/
+
+.filter-container .filter-content {
+    display: none;
+}
+.filter-container.open .filter-content {
+    display: block;
+}
+.filter-container .explain {
+    cursor: pointer;
+}
+.filter-container .explain.icon-minus-sign, .filter-container.open .explain.icon-plus-sign {
+    display: none;
+}
+.filter-container .explain.icon-plus-sign, .filter-container.open .explain.icon-minus-sign {
+    display: inline-block;
+}
+
+/*** Compare page ***/
+.compare-structure .column1 {
+    width: 200px;
+}
+.compare-structure .column2 {
+    width: 1170px;
+}
+.compare-structure .row2 {
+    height: 300px;
+}
+.compare-structure .column1, .compare-structure .column2 {
+    vertical-align: top;
+}
+.compare-structure .column1 table {
+    margin-bottom: 0px;
+}
+.compare-structure .column1 table th {
+    padding: 8px 2px;
+}
+.compare-structure .sortable-col a:hover {
+    border-bottom: 1px dashed gray;
+}
+.compare-structure .sortable-col a, .compare-structure .sortable-col a:hover {
+    text-decoration: none;
+    color: #333333;
+    display: block;
+}
+.col-cell-level {
+    width: 30px;
+}
+
+.all-parameters, .all-vehicles, .all-vehicle-parameters {
+    position: relative;
+}
+.all-parameters {
+    height: 40px;
+    overflow-x: scroll;
+    overflow-y: hidden;
+    /*margin-left: 200px;*/
+}
+.all-vehicles {
+    /*width: 200px;*/
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 100%;
+}
+.all-vehicle-parameters{
+    overflow: hidden;
+    height: 100%;
+}
+
+.all-parameters .params-container, .all-vehicles .params-container, .all-vehicle-parameters .params-container {
+    position: absolute;
+    margin-bottom: 0px;
+}
+.all-parameters .params-container {
+    width: 3000px;
+}
+.all-vehicle-parameters .params-container {
+    width: 3000px;
+}
+.all-vehicle-parameters {
+    height: 300px;
+}
+.all-vehicles .params-container {
+    width: 100%;
+}
+
+.all-parameters table th, .all-parameters table td, .all-vehicle-parameters table th, .all-vehicle-parameters table td {
+    text-align: center;
+    vertical-align: middle;
+    padding: 0px 3px;
+    font-size: 10px;
+    width: 120px;
+    height: 36px;
+    line-height: 10px;
+    border-right: 1px dashed gray;
+}
+.all-parameters table th {
+    height: 20px;
+    line-height: 20px;
+}
+.overflow {
+    position: absolute;
+    width: 1000px;
+    text-align: left;
+}
+.tank-parameter-cell.hover, .row-cell.hover, .col-param.hover {
+    background-color: #eee;
+}
+
+.sort-icon {
+    display: none;
+}
+.sorted-up .icon-chevron-up, .sorted-down .icon-chevron-down {
+    display: block;
+}
+.column1 .sort-icon {
+    position: absolute;
+    margin-left: 5px;
+}
+.column2 .sort-icon {
+    position: absolute;
+    top: -3px;
+    margin-left: 50px;
+}
+
+.container-filter-parameter-all label {
+    font-weight: bold;
+    border-bottom: 1px dashed #e5e5e5;
+}
+
+.compare-structure .column1 table td.tank-level-cell {
+    padding: 8px 2px;
+    width: 20px;
+    text-align: center;
+}
+.cell-tank-name {
+    width: 100px;
+    font-weight: bold;
+}
+.tank-full-name-overflow {
+    position: absolute;
+    width: 1000px;
+    text-align: left;
+    overflow-y: hidden;
+}
+
+.compare-winner {
+    font-weight: bold;
+    text-decoration: underline;
+    color: #000000;
+    background-color: #eafadb;
+}
+

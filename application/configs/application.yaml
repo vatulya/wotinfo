@@ -1,0 +1,47 @@
+production:
+    phpSettings:
+        display_startup_errors: false
+        display_errors: false
+    includePaths:
+        library: APPLICATION_PATH/../library
+    bootstrap:
+        path: APPLICATION_PATH/Bootstrap.php
+        class: Bootstrap
+    appnamespace: Application
+    resources:
+        frontController:
+            controllerDirectory: APPLICATION_PATH/controllers
+            moduleDirectory: APPLICATION_PATH/modules
+            actionhelperpaths:
+                Helper: APPLICATION_PATH/helpers
+            params:
+                displayExceptions: false
+        view:
+            helperPath:
+                My_View_Helper: My/View/Helper
+                Sch_View_Helper: Sch/View/Helper
+                Sch_Twitter_View_Helper: Sch/Twitter/View/Helper
+        db:
+            adapter: pdo_mysql
+            params:
+                host: kv.kirby.pp.ua
+                username: wotinfo
+                password: wotinfo
+                dbname: wotinfo
+        layout:
+            layoutPath: APPLICATION_PATH/layouts/scripts/
+
+staging:
+    _extends: production
+
+testing:
+    _extends: production
+    phpSettings:
+        display_startup_errors: true
+        display_errors: true
+
+development:
+    _extends: production
+    phpSettings:
+        display_startup_errors: true
+        display_errors: true
